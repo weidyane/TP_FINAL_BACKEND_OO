@@ -7,14 +7,11 @@
         }
         
         public function getAllProdutos() {
-            $stmt = $this->pdo->query("SELECT * FROM produtos");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $this->pdo->query("SELECT produtos.id, produtos.nome, produtos.descricao, produtos.preco, categorias.nome as \"nome_categoria\" FROM produtos INNER JOIN categorias WHERE categoria_id = categorias.id");
         }
         
         public function getProdutoById($id) {
-            $stmt = $this->pdo->prepare("SELECT * FROM produtos WHERE id = ?");
-            $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $this->pdo->query("SELECT produtos.id, produtos.nome, produtos.descricao, produtos.preco, categorias.nome as \"nome_categoria\" FROM produtos INNER JOIN categorias WHERE categoria_id = categorias.id AND produtos.id = " . $id . "");
         }
         
         // TODO
